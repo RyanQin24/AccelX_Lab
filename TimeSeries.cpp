@@ -13,7 +13,8 @@ TimeSeries::~TimeSeries(){
 }
 
 void TimeSeries::LoadCSV(std::string filename){
-
+    std::ifstream csvfile(filename);
+    std::string csvStringElement;
 }
 
 void TimeSeries::doubleArray(){
