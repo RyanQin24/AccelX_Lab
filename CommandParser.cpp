@@ -7,7 +7,7 @@ bool CommandParser::parseCommand(std::string input){
 
     if(command_string == "Load_CSV"){
         return true;
-    }else if(command_string == "Integral"){
+    }else if(command_string == "Integrate"){
         return true;
     }else if(command_string == "TimeData"){
         return true;
