@@ -7,9 +7,9 @@
 class TimeSeries{
     public:
         void LoadCSV(std::string filename);
+        void Integrate();
         void PrintData();
         void PrintMax();
-        void Integrate();
         TimeSeries();
         ~TimeSeries();
     private:
@@ -35,6 +35,15 @@ class TimeSeries{
         const std::size_t min_array_size{2};
         speed_data* speed_array = nullptr;
         acceleration_data* acceleration_array = nullptr;
+
+        const std::string calfile = "";
+
+        double scalar{1.0/16384.0};
+        int g_offset{16384};
+        double g{9.80665};
+        int offset_x{};
+        int offset_y{};
+        int offset_z{};
 
         void doubleArray();
         double VectorMagnitude(std::size_t index);

@@ -34,5 +34,5 @@ bin/CommandParser.o: CommandParser.cpp includes/CommandParser.h includes/TimeSer
 
 # Compile TimeSeries.cpp into TimeSeries.o
 # Rebuild TimeSeries.o if TimeSeries.cpp or TimeSeries.h changes
-bin/TimeSeries.o: CommandParser.cpp TimeSeries.cpp includes/TimeSeries.h
+bin/TimeSeries.o: TimeSeries.cpp includes/TimeSeries.h
 	$(CXX) $(CXXFLAGS) -c TimeSeries.cpp -o bin/TimeSeries.o

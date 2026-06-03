@@ -7,6 +7,7 @@
 class CommandParser{
 
     public:
+    CommandParser();
     bool parseCommand(std::string input);
     private:
     TimeSeries timeseries;
