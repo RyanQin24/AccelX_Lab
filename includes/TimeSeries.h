@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <math.h>
+#include <climits>
 
 class TimeSeries{
     public:
@@ -39,6 +40,7 @@ class TimeSeries{
         const std::string calfile = "calibration_data/cal.csv";
 
         double scalar{1.0/16384.0};
+        double time_interval{0.01};
         int g_offset{16384};
         double g{9.80665};
         double offset_x{0.0};

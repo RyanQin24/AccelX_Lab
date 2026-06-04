@@ -33,8 +33,16 @@ void TimeSeries::LoadCSV(std::string filename){
         acceleration_array[array_used_capacity].z = std::stoi(z);
         array_used_capacity++;
     }
-    std::cout << std::endl;
+    std::cout <<"************ " <<std::endl;
     std::cout << "Loaded acceleration data!" << std::endl;
+    for(std::size_t i{0}; i < array_used_capacity; i++){
+        acceleration_array[array_used_capacity].ax = (double)acceleration_array[array_used_capacity].x * scalar - offset_x;
+        acceleration_array[array_used_capacity].ay = (double)acceleration_array[array_used_capacity].y * scalar - offset_y;
+        acceleration_array[array_used_capacity].az = (double)acceleration_array[array_used_capacity].z * scalar - offset_z;
+    }
+    std::cout <<"************ " <<std::endl;
+    std::cout << "Scalar and Offset Calculated!" << std::endl;
+    std::cout << "Success" << std::endl;
 }
 
 void TimeSeries::CalcErr(){
@@ -46,21 +54,57 @@ void TimeSeries::CalcErr(){
     long long x{0};
     long long y{0};
     long long z{0};
+    int min_x{INT_MAX};
+    int max_x{INT_MIN};
+    int min_y{INT_MAX};
+    int max_y{INT_MIN};
+    int min_z{INT_MAX};
+    int max_z{INT_MIN};
+
     std::size_t n{0};
     while(std::getline(csvfile,csvStringElement)){
         std::stringstream ss(csvStringElement);
         std::getline(ss,acc_x,',');
         std::getline(ss,acc_y,',');
         std::getline(ss,acc_z);
-        x += std::stoi(acc_x) - g_offset;
-        y += std::stoi(acc_y);
-        z += std::stoi(acc_z);
+        int temp_x = std::stoi(acc_x) - g_offset;
+        int temp_y = std::stoi(acc_y);
+        int temp_z = std::stoi(acc_z);
+        if(temp_x < min_x){
+            min_x = temp_x;
+        }
+        if(temp_x > max_x){
+            max_x = temp_x;
+        }
+        if(temp_y < min_y){
+            min_y = temp_y;
+        }
+        if(temp_y > max_y){
+            max_y = temp_y;
+        }
+        if(temp_z < min_z){
+            min_z = temp_z;
+        }
+        if(temp_z > max_z){
+            max_z = temp_z;
+        }
+        x += temp_x;
+        y += temp_y;
+        z += temp_z;
         n++;
     }
-    offset_x = (double)x /(double)n;
-    offset_y = (double)y /(double)n;
-    offset_z = (double)z /(double)n;
+    offset_x = ((double)x /(double)n) * scalar;
+    offset_y = ((double)y /(double)n) * scalar;
+    offset_z = ((double)z /(double)n) * scalar;
     std::cout << "error calculated!" << std::endl;
+    std::cout << "x Bias: " << offset_x << " m/s^2" << std::endl;
+    std::cout << "x Variance: " << (double)(max_x - min_x)*scalar << " m/s^2" << std::endl;
+
+    std::cout << "y Bias: " << offset_y << " m/s^2" << std::endl;
+    std::cout << "y Variance: " << (double)(max_y - min_y)*scalar << " m/s^2" << std::endl;
+
+    std::cout << "z Bias: " << offset_z << " m/s^2" << std::endl;
+    std::cout << "z Variance: " << (double)(max_z - min_z)*scalar << " m/s^2" << std::endl;
 }
 
 void TimeSeries::doubleArray(){
