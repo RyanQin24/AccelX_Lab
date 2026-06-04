@@ -14,6 +14,7 @@ TimeSeries::~TimeSeries(){
 }
 
 void TimeSeries::LoadCSV(std::string filename){
+    CalcErr();
     std::ifstream csvfile(filename);
     std::string csvStringElement;
     std::string x;
@@ -32,7 +33,34 @@ void TimeSeries::LoadCSV(std::string filename){
         acceleration_array[array_used_capacity].z = std::stoi(z);
         array_used_capacity++;
     }
-    std::cout << "success" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Loaded acceleration data!" << std::endl;
+}
+
+void TimeSeries::CalcErr(){
+    std::ifstream csvfile(calfile);
+    std::string csvStringElement;
+    std::string acc_x;
+    std::string acc_y;
+    std::string acc_z;
+    long long x{0};
+    long long y{0};
+    long long z{0};
+    std::size_t n{0};
+    while(std::getline(csvfile,csvStringElement)){
+        std::stringstream ss(csvStringElement);
+        std::getline(ss,acc_x,',');
+        std::getline(ss,acc_y,',');
+        std::getline(ss,acc_z);
+        x += std::stoi(acc_x) - g_offset;
+        y += std::stoi(acc_y);
+        z += std::stoi(acc_z);
+        n++;
+    }
+    offset_x = (double)x /(double)n;
+    offset_y = (double)y /(double)n;
+    offset_z = (double)z /(double)n;
+    std::cout << "error calculated!" << std::endl;
 }
 
 void TimeSeries::doubleArray(){
@@ -51,5 +79,5 @@ void TimeSeries::doubleArray(){
 
 double TimeSeries::VectorMagnitude(std::size_t index){
     return sqrt((speed_array[index].x * speed_array[index].x + 
-    speed_array[index].y * speed_array[index].y + speed_array[index].z * speed_array[index].z));;
+    speed_array[index].y * speed_array[index].y + speed_array[index].z * speed_array[index].z));
 }

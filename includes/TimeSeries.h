@@ -41,10 +41,11 @@ class TimeSeries{
         double scalar{1.0/16384.0};
         int g_offset{16384};
         double g{9.80665};
-        double offset_x{};
-        double offset_y{};
-        double offset_z{};
+        double offset_x{0.0};
+        double offset_y{0.0};
+        double offset_z{0.0};
 
+        void CalcErr();
         void doubleArray();
         double VectorMagnitude(std::size_t index);
         void ProcessAcceleration();
