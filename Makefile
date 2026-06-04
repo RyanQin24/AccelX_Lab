@@ -10,7 +10,7 @@ CXXFLAGS = -Wall -Iincludes
 TARGET = main.exe
 
 # Object files to build before linking
-OBJ = bin/main.o bin/CommandParser.o bin/TimeSeries.o
+OBJ = bin/main.o bin/CommandParser.o bin/TimeSeries.o bin/Trapezoidal.o bin/Back4pt.o
 
 # Default target.
 # This runs when you type: mingw32-make
@@ -33,6 +33,13 @@ bin/CommandParser.o: CommandParser.cpp includes/CommandParser.h includes/TimeSer
 	$(CXX) $(CXXFLAGS) -c CommandParser.cpp -o bin/CommandParser.o
 
 # Compile TimeSeries.cpp into TimeSeries.o
-# Rebuild TimeSeries.o if TimeSeries.cpp or TimeSeries.h changes
-bin/TimeSeries.o: TimeSeries.cpp includes/TimeSeries.h
+bin/TimeSeries.o: TimeSeries.cpp includes/TimeSeries.h includes/Trapezoidal.h includes/Back4pt.h
 	$(CXX) $(CXXFLAGS) -c TimeSeries.cpp -o bin/TimeSeries.o
+
+# Compile Trapezoidal.cpp into Trapezoidal.o
+bin/Trapezoidal.o: includes/Trapezoidal.h Integral_Op/Trapezoidal.cpp
+	$(CXX) $(CXXFLAGS) -c Integral_Op/Trapezoidal.cpp -o bin/Trapezoidal.o
+
+# Compile Back4pt.cpp into Back4pt.o
+bin/Back4pt.o: includes/Back4pt.h Integral_Op/Back4pt.cpp
+	$(CXX) $(CXXFLAGS) -c Integral_Op/Back4pt.cpp -o bin/Back4pt.o
