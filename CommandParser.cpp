@@ -15,14 +15,22 @@ bool CommandParser::parseCommand(std::string input){
         timeseries.LoadCSV(filename);
         return true;
     }else if(command_string == "Integrate"){
+        std::string temp;
+        std::getline(temp_args,temp);
+        std::cout << temp << std::endl;
+        timeseries.Integrate(temp);
         return true;
     }else if(command_string == "TimeData"){
+        timeseries.PrintData();
         return true;
-    }else if(command_string == "Max_Speed"){
+    }else if(command_string == "MaxSpeed"){
+        timeseries.PrintMax();
         return true;
     }else if(command_string == "EXIT"){
+        std::cout << "exiting..." <<std::endl;
         return false;
     }else{
+        std::cout << "exiting..." <<std::endl;
         return false;
     }
 }

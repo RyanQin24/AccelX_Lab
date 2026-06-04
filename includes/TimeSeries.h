@@ -8,7 +8,7 @@
 class TimeSeries{
     public:
         void LoadCSV(std::string filename);
-        void Integrate();
+        void Integrate(std::string algorithm);
         void PrintData();
         void PrintMax();
         TimeSeries();
@@ -39,16 +39,18 @@ class TimeSeries{
 
         const std::string calfile = "calibration_data/cal.csv";
 
-        double scalar{1.0/16384.0};
+        double g{9.80665};
+        double scalar{g/16384.0};
         double time_interval{0.01};
         int g_offset{16384};
-        double g{9.80665};
         double offset_x{0.0};
         double offset_y{0.0};
         double offset_z{0.0};
+        bool IntegrateFlag{false};
 
         void CalcErr();
         void doubleArray();
         double VectorMagnitude(std::size_t index);
-        void ProcessAcceleration();
+        void Trapezoidal(std::size_t index, double &x, double &y, double &z);
+        void Back4Pt(std::size_t index, double &x, double &y, double &z);
 };
