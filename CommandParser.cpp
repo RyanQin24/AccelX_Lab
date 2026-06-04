@@ -30,7 +30,7 @@ bool CommandParser::parseCommand(std::string input){
         std::cout << "exiting..." <<std::endl;
         return false;
     }else{
-        std::cout << "exiting..." <<std::endl;
-        return false;
+        std::cout << "Error. Command Not found" <<std::endl;
+        return true;
     }
 }
