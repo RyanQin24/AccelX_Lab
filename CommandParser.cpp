@@ -17,7 +17,6 @@ bool CommandParser::parseCommand(std::string input){
     }else if(command_string == "Integrate"){
         std::string temp;
         std::getline(temp_args,temp);
-        std::cout << temp << std::endl;
         timeseries.Integrate(temp);
         return true;
     }else if(command_string == "TimeData"){

@@ -37,7 +37,7 @@ class TimeSeries{
         speed_data* speed_array = nullptr;
         acceleration_data* acceleration_array = nullptr;
 
-        const std::string calfile = "calibration_data/cal.csv";
+        const std::string calfile = "calibration_data/cal2.csv";
 
         double g{9.80665};
         double scalar{g/16384.0};
